@@ -36,7 +36,7 @@ struct cfg
 	int bluepropro;
 	int getname;
 	int amnesia;
-	int syslogonly;
+	//int syslogonly;
 	int getmanufacturer;
 	
 	// Advanced
@@ -74,7 +74,7 @@ struct cfg config =
 	.bluepropro = 0,
 	.getname = 0,
 	.amnesia = -1,
-	.syslogonly = 0,
+	//.syslogonly = 0,
 	.getmanufacturer = 0,
 	.retry_count = 3,
 	.scan_window = 8,
@@ -151,7 +151,7 @@ static void cfg_check (void)
 	{
 		config.bluelive = 0;
 		config.getname = 1;
-		config.syslogonly = 0;
+		//config.syslogonly = 0;
 	}
 
 	// Showing raw class ID turns off friendly names
@@ -163,23 +163,23 @@ static void cfg_check (void)
 	{
 		config.showtime = 0;
 		config.getname = 1;
-		config.syslogonly = 0;
+		//config.syslogonly = 0;
 	}
 	
 	// No timestamps in syslog mode, disable other modes
-	if (config.syslogonly)
+	/*if (config.syslogonly)
 	{
 		config.showtime = 0;
 		config.bluelive = 0;
 		config.bluepropro = 0;
-	}
+	}*/
 	
 	// UDP disables other modes
 	if (config.udponly)
 	{
 		config.bluelive = 0;
 		config.bluepropro = 0;
-		config.syslogonly = 0;
+		//config.syslogonly = 0;
 	}
 
 	// Encode trumps obfuscate
@@ -243,8 +243,8 @@ int cfg_read (void)
 					config.getname = eval_bool(value, linenum);
 				else if (strcmp(token, "AMNESIA") == 0)
 					config.amnesia = (atoi(value));
-				else if (strcmp(token, "SYSLOGONLY") == 0)
-					config.syslogonly = eval_bool(value, linenum);
+				//else if (strcmp(token, "SYSLOGONLY") == 0)
+				//	config.syslogonly = eval_bool(value, linenum);
 				else if (strcmp(token, "GETMANUFACTURER") == 0)
 					config.getmanufacturer = eval_bool(value, linenum);			
 				else if (strcmp(token, "SCANWINDOW") == 0)
