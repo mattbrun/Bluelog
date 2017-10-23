@@ -453,9 +453,9 @@ int main(int argc, char *argv[])
 		case 't':
 			config.showtime = 1;
 			break;
-		case 's':
-			config.syslogonly = 1;
-			break;
+		//case 's':
+		//	config.syslogonly = 1;
+		//	break;
 		case 'x':
 			config.obfuscate = 1;
 			break;
@@ -603,7 +603,7 @@ int main(int argc, char *argv[])
 		open_udp_socket();
 
 	// Open output file, unless in networking mode
-	if (!config.syslogonly && !config.udponly)
+	if (/*!config.syslogonly &&*/ !config.udponly)
 	{
 		if (config.bluelive)
 		{
