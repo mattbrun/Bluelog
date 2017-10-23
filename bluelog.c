@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <getopt.h>
 #include <signal.h>
-#include <syslog.h>
+//#include <syslog.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/socket.h>
@@ -132,7 +132,7 @@ void shut_down(int sig)
 	printf("Done!\n");
 	
 	// Log shutdown to syslog
-	syslog(LOG_INFO, "Shutdown OK.");
+	//syslog(LOG_INFO, "Shutdown OK.");
 	exit(sig);
 }
 
@@ -213,7 +213,7 @@ static void daemonize (void)
 	// Process and Session ID
 	pid_t pid, sid;
 	
-	syslog(LOG_INFO,"Going into daemon mode...");
+	//syslog(LOG_INFO,"Going into daemon mode...");
  
 	// Fork off process
 	pid = fork();
@@ -339,7 +339,7 @@ static struct option main_options[] = {
 	{ "name", 0, 0, 'n' },
 	{ "help", 0, 0, 'h' },
 	{ "daemonize", 0, 0, 'd' },
-	{ "syslog", 0, 0, 's' },
+	//{ "syslog", 0, 0, 's' },
 	{ "encode", 0, 0, 'e' },
 	{ "quiet", 0, 0, 'q' },
 	{ "manufacturer", 0, 0, 'm' },
@@ -672,7 +672,7 @@ int main(int argc, char *argv[])
 	}
 	
 	// Log success to this point
-	syslog(LOG_INFO,"Init OK!");
+	//syslog(LOG_INFO,"Init OK!");
 	
 	// Daemon switch
 	if (config.daemon)
@@ -706,7 +706,7 @@ int main(int argc, char *argv[])
 			// Ignore occasional errors on Pwn Plug and OpenWRT
 			#if !defined PWNPLUG || OPENWRT
 			// All other platforms, print error and bail out
-			syslog(LOG_ERR,"Received error from BlueZ!");
+			//syslog(LOG_ERR,"Received error from BlueZ!");
 			printf("Scan failed!\n");
 			// Check for kernel 3.0.x
 			if (!strncmp("3.0.",sysinfo.release,4))
@@ -730,7 +730,7 @@ int main(int argc, char *argv[])
 			if (error_count > 5)
 			{
 				printf("Scan failed!\n");				
-				syslog(LOG_ERR,"BlueZ not responding, unrecoverable!");
+				//syslog(LOG_ERR,"BlueZ not responding, unrecoverable!");
 				shut_down(1);
 			}
 			
@@ -747,7 +747,7 @@ int main(int argc, char *argv[])
 		// Check if we need to reset device cache
 		if ((cache_index + num_results) >= MAX_DEV)
 		{
-			syslog(LOG_INFO,"Resetting device cache...");
+			//syslog(LOG_INFO,"Resetting device cache...");
 			memset(dev_cache, 0, sizeof(dev_cache));
 			cache_index = 0;
 		}
@@ -773,7 +773,7 @@ int main(int argc, char *argv[])
 					// If we don't have a name, query again
 					if ((dev_cache[ri].print == 3) && (dev_cache[ri].seen > config.retry_count))
 					{
-						syslog(LOG_INFO,"Unable to find name for %s!", addr);
+						//syslog(LOG_INFO,"Unable to find name for %s!", addr);
 						dev_cache[ri].print = 1;
 					}
 					else if ((dev_cache[ri].print == 3) && (dev_cache[ri].seen < config.retry_count))
@@ -784,12 +784,12 @@ int main(int argc, char *argv[])
 						// Did we get one?
 						if (strcmp (dev_cache[ri].name, "VOID") != 0)
 						{
-							syslog(LOG_INFO,"Name retry for %s successful!", addr);
+							//syslog(LOG_INFO,"Name retry for %s successful!", addr);
 							// Force print
 							dev_cache[ri].print = 1;
 						}
 						else
-							syslog(LOG_INFO,"Name retry %i for %s failed!",dev_cache[ri].seen, addr);
+							//syslog(LOG_INFO,"Name retry %i for %s failed!",dev_cache[ri].seen, addr);
 					}
 					
 					// Amnesia mode
@@ -844,7 +844,7 @@ int main(int argc, char *argv[])
 					{
 						// Found with no name.
 						// Print message to syslog, prevent printing, and move on
-						syslog(LOG_INFO,"Device %s discovered with no name, will retry", dev_cache[ri].addr);
+						//syslog(LOG_INFO,"Device %s discovered with no name, will retry", dev_cache[ri].addr);
 						dev_cache[ri].print = 3;
 						break;
 					}											
@@ -933,9 +933,9 @@ int main(int argc, char *argv[])
 							sprintf(outbuffer+strlen(outbuffer),",%s", dev_cache[ri].name);
 													
 						// Send buffer, else file. File needs newline
-						if (config.syslogonly)
+						/*if (config.syslogonly)
 							syslog(LOG_INFO,"%s", outbuffer);
-						else if (config.udponly)
+						else*/ if (config.udponly)
 						{
 							// Append newline to socket, kind of hacky
 							sprintf(outbuffer+strlen(outbuffer),"\n");

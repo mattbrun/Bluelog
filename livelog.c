@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <syslog.h>
+//#include <syslog.h>
 #include <string.h>
 #include <unistd.h>
 #include <getopt.h>
@@ -353,7 +353,7 @@ int main(int argc, char *argv[])
 	#ifndef OPENWRT
 	if(getuid() == 0)
 	{
-		syslog(LOG_ERR,"CGI module refusing to run as root!");
+		//syslog(LOG_ERR,"CGI module refusing to run as root!");
 		
 		// Make sure error message is themed
 		print_header(CSSFILE);
@@ -382,7 +382,7 @@ int main(int argc, char *argv[])
 	// Open files
 	if ((infofile = fopen(infofilename, "r")) == NULL)
 	{
-		syslog(LOG_ERR,"Error while opening %s!",infofilename);
+		//syslog(LOG_ERR,"Error while opening %s!",infofilename);
 		puts("<div id=\"content\">");
 		printf("Error while opening %s!\n",infofilename);
 		puts("</body></html>");
@@ -391,7 +391,7 @@ int main(int argc, char *argv[])
 	
 	if ((logfile = fopen(logfilename, "r")) == NULL)
 	{
-		syslog(LOG_ERR,"Error while opening %s!",logfilename);
+		//syslog(LOG_ERR,"Error while opening %s!",logfilename);
 		puts("<div id=\"content\">");
 		printf("Error while opening %s!\n",logfilename);
 		puts("</body></html>");
