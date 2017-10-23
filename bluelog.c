@@ -788,7 +788,7 @@ int main(int argc, char *argv[])
 							// Force print
 							dev_cache[ri].print = 1;
 						}
-						else
+						//else
 							//syslog(LOG_INFO,"Name retry %i for %s failed!",dev_cache[ri].seen, addr);
 					}
 					
